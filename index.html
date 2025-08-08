@@ -5,7 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise 1 The Shopping List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
     <style>
+
+        *{
+            font-family: "Inter";
+        }
         label,
         input {
             display: block;
@@ -16,6 +25,8 @@
             width: 40%;
             margin: 0 auto;
             padding: 20px;
+            border-radius: 10px;
+            font-size: 1vw;
         }
 
         label,
@@ -25,10 +36,14 @@
             height: 30px;
         }
 
+        input{
+            margin-top: -10px !important;
+        }
+
         table {
             margin: 20px auto;
             padding: 10px;
-            width: 50%;
+            width: 90%;
         }
 
         table,
@@ -53,29 +68,49 @@
         }
 
         .del-btn {
-            background-color: red;
+            background-color: #f44336;
+;
+            border-radius: 5px;
+            padding: 5px;
+            color: white;
+        }
+
+        .shopping-table{
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 45%;
+            margin: 50px auto;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 1vw;
+        }
+
+        #add-btn{
+                        background-color: #008CBA;
+            padding: 10px;
+            margin: 20px auto !important;
+            width: 95%;
         }
     </style>
 </head>
 
 <body>
     <div class="shopping-form">
-        <h1 style="text-align: center;">My Shopping List</h1>
+        <h1 style="text-align: center; font-size: 2vw;">My Shopping List</h1>
         <form action="">
             <label for="item-name">Item Name:</label>
             <input type="text" id="item-name" name="item-name" required>
             <label for="item-price">Item Price:</label>
-            <input type="number" id="item-price" name="item-price" required min="0.01" >
+            <input type="number" id="item-price" name="item-price" required min="0.01">
             <button id="add-btn">Add Item</button>
         </form>
     </div>
 
     <div class="shopping-table">
-        <h2 style="text-align: center;">Shopping List</h2>
+        <h2 style="text-align: center; font-size: 1.5vw;">Shopping List</h2>
         <table>
             <thead>
-                <tr>
-                    <th id="item-column">Item</th>
+                <tr style="background-color: #e7e7e7;">
+                    <th  id="item-column">Item</th>
                     <th id="price-column">Price</th>
                     <th id="act-column">Actions</th>
                 </tr>
