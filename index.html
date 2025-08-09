@@ -11,19 +11,20 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
     <style>
-
-        *{
+        * {
             font-family: "Inter";
+            box-sizing: border-box;
         }
+
         label,
         input {
             display: block;
         }
 
-        form {
+        .shopping-form {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 40%;
-            margin: 0 auto;
+            margin: 50px auto 40px auto;
             padding: 20px;
             border-radius: 10px;
             font-size: 1vw;
@@ -36,7 +37,7 @@
             height: 30px;
         }
 
-        input{
+        input {
             margin-top: -10px !important;
         }
 
@@ -69,26 +70,71 @@
 
         .del-btn {
             background-color: #f44336;
-;
+            ;
             border-radius: 5px;
             padding: 5px;
             color: white;
         }
 
-        .shopping-table{
+        .shopping-table {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 45%;
-            margin: 50px auto;
+            width: 40%;
+            margin: 20px auto;
             padding: 10px;
             border-radius: 10px;
             font-size: 1vw;
         }
 
-        #add-btn{
-                        background-color: #008CBA;
+        #add-btn {
+            background-color: #008CBA;
             padding: 10px;
             margin: 20px auto !important;
             width: 95%;
+        }
+
+        .no-item {
+            column-span: 3;
+
+        }
+
+        /* responsiv */
+        @media screen and (max-width: 767px) {
+            .shopping-form{
+                width: 85%;
+                font-size: 3vw;
+                margin: 30px auto;
+            }
+            .shopping-table{
+                width: 85%;
+                font-size: 3vw;
+            }
+            h1,h2{
+                font-size: 3vw !important;
+            }
+            #add-btn{
+                padding: 5px;
+            }
+        }
+
+
+
+
+        @media screen and (min-width:767px) and (max-width: 1024px) {
+                        .shopping-form{
+                width: 80%;
+                font-size: 2vw;
+                margin: 40px auto;
+            }
+            .shopping-table{
+                width: 80%;
+                font-size: 2vw;
+            }
+            h1,h2{
+                font-size: 3vw !important;
+            }
+            #add-btn{
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -96,13 +142,11 @@
 <body>
     <div class="shopping-form">
         <h1 style="text-align: center; font-size: 2vw;">My Shopping List</h1>
-        <form action="">
-            <label for="item-name">Item Name:</label>
-            <input type="text" id="item-name" name="item-name" required>
-            <label for="item-price">Item Price:</label>
-            <input type="number" id="item-price" name="item-price" required min="0.01">
-            <button id="add-btn">Add Item</button>
-        </form>
+        <label for="item-name">Item Name:</label>
+        <input type="text" id="item-name" name="item-name" required>
+        <label for="item-price">Item Price:</label>
+        <input type="number" id="item-price" name="item-price" required min="0.01">
+        <button id="add-btn">Add Item</button>
     </div>
 
     <div class="shopping-table">
@@ -110,7 +154,7 @@
         <table>
             <thead>
                 <tr style="background-color: #e7e7e7;">
-                    <th  id="item-column">Item</th>
+                    <th id="item-column">Item</th>
                     <th id="price-column">Price</th>
                     <th id="act-column">Actions</th>
                 </tr>
@@ -122,24 +166,41 @@
     </div>
 
     <script>
+        const tablebody = document.getElementById("item-table-body");
+
+        const addBtn = document.getElementById("add-btn");
+
+
+        const noItem = document.createElement("td");
+        noItem.classList.add("no-item");
+        noItem.textContent = "No item found";
+        noItem.colSpan = 3;
+        noItem.style.textAlign = "center";
+        noItem.style.padding = "20px";
+        tablebody.appendChild(noItem);
+
 
         function addItem() {
-            let inputItemName = document.getElementById("item-name").value;
-            let inputItemPrice = document.getElementById("item-price").value;
-            let tablebody = document.getElementById("item-table-body");
-            let tr = document.createElement("tr");
 
-            if (inputItemName && inputItemPrice) {
-                let tdItem = document.createElement("td");
+            const inputItemName = document.getElementById("item-name").value;
+            const inputItemPrice = document.getElementById("item-price").value;
+            const tr = document.createElement("tr");
+
+            if (inputItemName.trim() === "" || inputItemPrice.trim() === "" || inputItemPrice < 0) {
+                alert("Error: Invalid input.");
+                return;
+            } else {
+
+                const tdItem = document.createElement("td");
                 tdItem.textContent = inputItemName;
                 tr.appendChild(tdItem);
 
-                let tdPrice = document.createElement("td");
+                const tdPrice = document.createElement("td");
                 tdPrice.textContent = "$" + inputItemPrice;
                 tr.appendChild(tdPrice);
 
-                let tdAct = document.createElement("td")
-                let delBtn = document.createElement("button")
+                const tdAct = document.createElement("td")
+                const delBtn = document.createElement("button")
                 delBtn.classList.add("del-btn");
                 delBtn.textContent = "Delete";
                 tdAct.appendChild(delBtn);
@@ -149,15 +210,20 @@
 
                 delBtn.addEventListener("click", function () {
                     tr.remove();
+                    if (tablebody.querySelectorAll("tr").length === 0) {
+                        tablebody.appendChild(noItem);
+                    }
                 });
-            } else {
-                alert("please complete all fields");
-                return;
+
+                if (tablebody.querySelectorAll("tr").length > 0) {
+                    noItem.remove();
+                }
             }
+
+
 
         }
 
-        let addBtn = document.getElementById("add-btn");
         addBtn.addEventListener("click", function (e) {
             e.preventDefault();
             addItem();
