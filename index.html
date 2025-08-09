@@ -109,15 +109,12 @@
                 font-size: 3vw;
             }
             h1,h2{
-                font-size: 3vw !important;
+                font-size: 4vw !important;
             }
             #add-btn{
                 padding: 5px;
             }
         }
-
-
-
 
         @media screen and (min-width:767px) and (max-width: 1024px) {
                         .shopping-form{
@@ -142,9 +139,9 @@
 <body>
     <div class="shopping-form">
         <h1 style="text-align: center; font-size: 2vw;">My Shopping List</h1>
-        <label for="item-name">Item Name:</label>
+        <label for="item-name">Item Name <span style="color: #f44336; font-weight: bolder;">*</span>:</label>
         <input type="text" id="item-name" name="item-name" required>
-        <label for="item-price">Item Price:</label>
+        <label for="item-price">Item Price <span style="color: #f44336; font-weight: bolder;">*</span>:</label>
         <input type="number" id="item-price" name="item-price" required min="0.01">
         <button id="add-btn">Add Item</button>
     </div>
@@ -167,9 +164,7 @@
 
     <script>
         const tablebody = document.getElementById("item-table-body");
-
         const addBtn = document.getElementById("add-btn");
-
 
         const noItem = document.createElement("td");
         noItem.classList.add("no-item");
