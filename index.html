@@ -166,22 +166,24 @@
         const tablebody = document.getElementById("item-table-body");
         const addBtn = document.getElementById("add-btn");
 
+        const noItemRow = document.createElement("tr");
         const noItem = document.createElement("td");
-        noItem.classList.add("no-item");
-        noItem.textContent = "No item found";
+        noItemRow.appendChild(noItem);
+        noItem.textContent = "No items found";
         noItem.colSpan = 3;
         noItem.style.textAlign = "center";
         noItem.style.padding = "20px";
-        tablebody.appendChild(noItem);
+        tablebody.appendChild(noItemRow);
 
 
         function addItem() {
 
             const inputItemName = document.getElementById("item-name").value;
             const inputItemPrice = document.getElementById("item-price").value;
+            const priceFormat = new Intl.NumberFormat("en-US", {style: "currency", currency : "USD"}).format(inputItemPrice);
             const tr = document.createElement("tr");
 
-            if (inputItemName.trim() === "" || inputItemPrice.trim() === "" || inputItemPrice < 0) {
+            if (inputItemName.trim() === "" || inputItemPrice.trim() === "" || inputItemPrice <= 0) {
                 alert("Error: Invalid input.");
                 return;
             } else {
@@ -191,7 +193,7 @@
                 tr.appendChild(tdItem);
 
                 const tdPrice = document.createElement("td");
-                tdPrice.textContent = "$" + inputItemPrice;
+                tdPrice.textContent = priceFormat;
                 tr.appendChild(tdPrice);
 
                 const tdAct = document.createElement("td")
@@ -206,12 +208,12 @@
                 delBtn.addEventListener("click", function () {
                     tr.remove();
                     if (tablebody.querySelectorAll("tr").length === 0) {
-                        tablebody.appendChild(noItem);
+                        tablebody.appendChild(noItemRow);
                     }
                 });
 
                 if (tablebody.querySelectorAll("tr").length > 0) {
-                    noItem.remove();
+                    noItemRow.remove();
                 }
             }
 
@@ -220,7 +222,6 @@
         }
 
         addBtn.addEventListener("click", function (e) {
-            e.preventDefault();
             addItem();
             document.getElementById("item-name").value = "";
             document.getElementById("item-price").value = "";
