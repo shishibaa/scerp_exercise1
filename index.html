@@ -99,37 +99,45 @@
 
         /* responsiv */
         @media screen and (max-width: 767px) {
-            .shopping-form{
+            .shopping-form {
                 width: 85%;
                 font-size: 3vw;
                 margin: 30px auto;
             }
-            .shopping-table{
+
+            .shopping-table {
                 width: 85%;
                 font-size: 3vw;
             }
-            h1,h2{
+
+            h1,
+            h2 {
                 font-size: 4vw !important;
             }
-            #add-btn{
+
+            #add-btn {
                 padding: 5px;
             }
         }
 
         @media screen and (min-width:767px) and (max-width: 1024px) {
-                        .shopping-form{
+            .shopping-form {
                 width: 80%;
                 font-size: 2vw;
                 margin: 40px auto;
             }
-            .shopping-table{
+
+            .shopping-table {
                 width: 80%;
                 font-size: 2vw;
             }
-            h1,h2{
+
+            h1,
+            h2 {
                 font-size: 3vw !important;
             }
-            #add-btn{
+
+            #add-btn {
                 padding: 10px;
             }
         }
@@ -163,6 +171,8 @@
     </div>
 
     <script>
+        let itemList = [];
+
         const tablebody = document.getElementById("item-table-body");
         const addBtn = document.getElementById("add-btn");
 
@@ -180,14 +190,20 @@
 
             const inputItemName = document.getElementById("item-name").value;
             const inputItemPrice = document.getElementById("item-price").value;
-            const priceFormat = new Intl.NumberFormat("en-US", {style: "currency", currency : "USD"}).format(inputItemPrice);
+            const priceFormat = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(inputItemPrice);
             const tr = document.createElement("tr");
+
+            const item = {
+                name: inputItemName,
+                price: inputItemPrice
+            }
 
             if (inputItemName.trim() === "" || inputItemPrice.trim() === "" || inputItemPrice <= 0) {
                 alert("Error: Invalid input.");
                 return;
             } else {
 
+                itemList.push(item)
                 const tdItem = document.createElement("td");
                 tdItem.textContent = inputItemName;
                 tr.appendChild(tdItem);
@@ -207,6 +223,7 @@
 
                 delBtn.addEventListener("click", function () {
                     tr.remove();
+                    itemList = itemList.filter(i => i !== item);
                     if (tablebody.querySelectorAll("tr").length === 0) {
                         tablebody.appendChild(noItemRow);
                     }
